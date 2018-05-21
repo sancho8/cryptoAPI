@@ -44,8 +44,8 @@ app.controller("mainController", function ($scope, $http) {
             type: 'line',
             data: {
                 labels: $scope.cryptoData.map(function (a) {
-                    var date = new Date(a.time * 100);
-                    return date.toString().split("+");
+                    var date = new Date(a.time * 1000);
+                    return date.getDate() + "."+ date.getMonth() + "." + date.getFullYear();
                 }),
                 datasets: [{
                     label: '# of Votes',
@@ -60,6 +60,15 @@ app.controller("mainController", function ($scope, $http) {
                 }]
             },
             options: {
+                responsive: false,
+                title: {
+                    display: true,
+                    text: 'Bitcoin',
+                    fontSize: 20
+                },
+                legend: {
+                    display: false
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -69,7 +78,7 @@ app.controller("mainController", function ($scope, $http) {
                     xAxes: [{
                         ticks: {
                             autoSkip: true,
-                            maxTicksLimit: 24
+                            maxTicksLimit: 10
                         }
                     }]
                 }
@@ -86,8 +95,8 @@ app.controller("mainController", function ($scope, $http) {
             type: 'line',
             data: {
                 labels: $scope.cryptoData2.map(function (a) {
-                    var date = new Date(a.time * 100);
-                    return date.toString().split("+");
+                    var date = new Date(a.time * 1000);
+                    return date.getDate() + "."+ date.getMonth() + "." + date.getFullYear();
                 }),
                 datasets: [{
                     label: '# of Votes',
@@ -102,6 +111,15 @@ app.controller("mainController", function ($scope, $http) {
                 }]
             },
             options: {
+                responsive: false,
+                title: {
+                    display: true,
+                    text: 'Enthereum',
+                    fontSize: 20
+                },
+                legend: {
+                    display: false
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -111,11 +129,63 @@ app.controller("mainController", function ($scope, $http) {
                     xAxes: [{
                         ticks: {
                             autoSkip: true,
-                            maxTicksLimit: 24
+                            maxTicksLimit: 10
                         }
                     }]
                 }
             }
         });
+    });
+
+    $http.get("https://min-api.cryptocompare.com/data/histoday?fsym=LTC&tsym=USD&limit=100").then(function (data) {
+        $scope.cryptoData3 = data.data.Data;
+        console.log(data);
+        var ctx3 = document.getElementById("myChart3").getContext('2d');
+        var myChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: $scope.cryptoData3.map(function (a) {
+                    var date = new Date(a.time * 1000);
+                    return date.getDate() + "."+ date.getMonth() + "." + date.getFullYear();
+                }),
+                datasets: [{
+                    label: '# of Votes',
+                    data: $scope.cryptoData3.map(a => a.close),
+                    backgroundColor: [
+                        'rgba(132, 99, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(132,99,255,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                title: {
+                    display: true,
+                    text: 'Litecoin',
+                    fontSize: 20
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }],
+                    xAxes: [{
+                      
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 10
+                        }
+                    }]
+                }
+            }
+        });
+        
     });
 });
