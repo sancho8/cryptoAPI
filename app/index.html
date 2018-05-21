@@ -28,26 +28,50 @@
 
 </head>
 
-<body>
+<body ng-app="CryptoAPI" ng-controller="mainController">
 
 	<div class="container">
-
-		<div class="row">
-
-			<div class="col-sm-8 col-sm-offset-2">
-				
-				<img class="img-responsive" src="img/preview.jpg" alt="Start HTML5 Template">
-				<p>Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Пустился снова, силуэт сих снова не коварный за языкового текста до рекламных, агенство возвращайся, буквенных жизни это, первую переулка правилами?</p>
-				<p>Наш, приставка страна единственное большой, власти, злых, взобравшись семь рот он алфавит осталось вершину курсивных сих всемогущая буквенных предупредила залетают необходимыми эта но вдали имеет ты? Предупреждал повстречался, но которое!</p>
-				<p>Злых, знаках свою. Выйти по всей рукописи запятой дороге маленький дорогу, все вопроса переулка необходимыми точках повстречался текстов наш приставка одна над страна последний, за имеет ты всемогущая предложения рот скатился.</p>
-
+		<div class="col-md-4 cards-holder">
+			<div class="card" ng-repeat="card in cards">
+					<div class="form-group">
+				<select ng-model="card.currency" class="form-group">
+					<option value="BTC">Bitcoin</option>
+					<option value="ETH">Ethereum</option>
+					<option value="RPL">Ripple</option>
+				</select>
+				</div>
+				<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input class="form-control" type="number" ng-model="card.amount">
+				</div>
+				<div class="form-check">
+						<input class="form-check-input" type="checkbox" ng-model="card.move" ng-true-value="up" ng-false-value="down">
+						<label class="form-check-label" for="exampleCheck1">Направление вверх</label>
+				</div>
+				<div class="form-check">
+						<input class="form-check-input" type="checkbox" ng-model="card.isActive" ng-true-value="true" ng-false-value="false">
+						<label class="form-check-label" for="exampleCheck1">Актвная</label>
+				</div>
+				<button ng-show="card.isCreated" class="btn btn-warning" ng-click="removeCard(card)">
+					Remove
+				</button>
+				<button ng-show="!card.isCreated" class="btn btn-info" ng-click="addCard(); card.isCreated=true">
+					Add
+				</button>
 			</div>
-			
 		</div>
-
+		<div class="col-md-8">
+			<canvas id="myChart" width="400" height="400"></canvas>
+			<canvas id="myChart2" width="400" height="400"></canvas>
+		</div>
 	</div>
 
+
 	<script src="js/scripts.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/charts.js"></script>
+	<script src="js/app.js"></script>
 
 </body>
+
 </html>
